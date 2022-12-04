@@ -1,11 +1,13 @@
 import fs from 'fs';
-import http from 'http';
+import https from 'https';
 import QRCode from 'qrcode-terminal';
+import { hostname, realPort, topRedirect } from './envs';
 
-const topRedirect = process.env['TOP_REDIRECT'] || 'https://example.com/';
-
-const server = http.createServer((req, res) => {
-    const url = new URL(req.url ?? '/', 'http://localhost/');
+const server = https.createServer({
+    'cert': fs.readFileSync('/etc/cert/fullchain.pem'),
+    'key': fs.readFileSync('/etc/cert/privkey.pem'),
+}, (req, res) => {
+    const url = new URL(req.url ?? '/', `http://${hostname}/`);
     const target = url.searchParams.get('url');
     if (!target) {
         res.writeHead(302, {
@@ -22,4 +24,6 @@ const server = http.createServer((req, res) => {
     });
 });
 
-server.listen(4000);
+server.listen(443, () => {
+    console.log(`Server running at https://${hostname}${realPort === 443 ? '' : ':' + realPort}/`);
+});

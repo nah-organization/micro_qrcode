@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  app:
+    build: .
+    ports:
+      - "$MICRO_QR_REAL_PORT:443"
+    environment:
+      - MICRO_QR_HOSTNAME
+      - MICRO_QR_REAL_PORT
+      - MICRO_QR_TOP_REDIRECT
+    volumes:
+      - ./log/:/app/log/
+      - "$MICRO_QR_CERT_PATH:/etc/cert/"
+    restart: always
