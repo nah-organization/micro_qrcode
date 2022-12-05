@@ -1,0 +1,13 @@
+name: Docker Build
+run-name: Docker Build name
+on: [push]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This job's status is ${{ job.status }}."
