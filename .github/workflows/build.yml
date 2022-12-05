@@ -18,7 +18,7 @@ jobs:
       - name: Generate docker tag from unix time
         id: version
         run: echo "version=$(date +%s)" > $GITHUB_OUTPUT
-      - run: echo "${{ steps.version.outputs.version }}"
+      - run: echo "docker tag is ${{ steps.version.outputs.version }}"
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag micro_qr:${{ steps.version.outputs.version }}
       - name: Save the Docker image
