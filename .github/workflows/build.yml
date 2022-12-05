@@ -15,11 +15,9 @@ jobs:
     steps:
       - run: echo "This job's status is ${{ job.status }}."
       - uses: actions/checkout@v3
-      - run: echo $GITHUB_STATE
-      - run: echo $GITHUB_OUTPUT
       - name: Generate docker tag from unix time
         id: version
-        run: echo "::set-output name=version::$(date +%s)"
+        run: echo "version=$(date +%s)" > $GITHUB_OUTPUT
       - run: echo "${{ steps.changes.outputs.version }}"
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag micro_qr:${{ steps.changes.outputs.version }}
