@@ -1,13 +1,23 @@
 name: Docker Build
 run-name: Docker Build name
-on: [push]
+on:
+  push:
+    paths-ignore: 
+      - 'build/**'
 
 permissions:
   id-token: write
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - run: echo "This job's status is ${{ job.status }}."
+      - run: ls
+      - run: pwd
+      - run: printenv
