@@ -1,5 +1,5 @@
 name: Docker Build
-run-name: Docker Build name
+run-name: Docker Build
 on:
   push:
     paths-ignore: 
@@ -22,7 +22,7 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag micro_qr:${{ steps.version.outputs.version }}
       - name: Save the Docker image
-        run: docker save micro_qr:${{ steps.version.outputs.version }} > build/app.tar
+        run: docker save micro_qr:${{ steps.version.outputs.version }} | gzip > build/app.tar.gz
       - run: ls build
       - name: git commit and push
         run: |
