@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "This job's status is ${{ job.status }}."
+      - uses: actions/checkout@v3
       - run: ls -a
       - run: ls -a ../
-      - run: ls -a ../../
-      - run: ls -a ../../../
+      - run: pwd
       - run: echo 'aaa' > abc.txt
