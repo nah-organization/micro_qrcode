@@ -15,7 +15,14 @@ jobs:
     steps:
       - run: echo "This job's status is ${{ job.status }}."
       - uses: actions/checkout@v3
-      - run: ls -a
-      - run: ls -a ../
-      - run: pwd
-      - run: echo 'aaa' > abc.txt
+      - name: Generate docker tag from unix time
+        id: version
+        run: echo "::set-output name=version::$(date +%s)"
+      - run: echo "${{ steps.changes.outputs.version }}"
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag micro_qr:${{ steps.changes.outputs.version }}
+      - name: Save the Docker image
+        run: docker save micro_qr:${{ steps.changes.outputs.version }} > build/app.tar
+      - run: ls
+      - run: ls build
+
