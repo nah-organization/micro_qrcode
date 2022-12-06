@@ -2,6 +2,12 @@ name: Docker Build
 run-name: Docker Build
 on:
   push:
+    paths:
+      - 'src/**'
+      - 'Dockerfile'
+      - 'package.json'
+      - 'tsconfig.json'
+      - '.github/workflows'
     paths-ignore: 
       - 'build/**'
 
