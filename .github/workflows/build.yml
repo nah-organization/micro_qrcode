@@ -8,8 +8,6 @@ on:
       - 'package.json'
       - 'tsconfig.json'
       - '.github/workflows'
-    paths-ignore: 
-      - 'build/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
