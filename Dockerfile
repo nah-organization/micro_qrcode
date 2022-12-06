@@ -1,8 +1,8 @@
 FROM node:18-alpine AS build
 
 WORKDIR /build/
-COPY tsconfig.json package.json /build/
-RUN npm install
+COPY tsconfig.json package.json package-lock.json /build/
+RUN npm ci
 
 COPY src /build/src
 RUN npm run build
