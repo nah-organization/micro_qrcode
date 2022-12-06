@@ -1,0 +1,25 @@
+name: Jest Test
+run-name: Jest Test
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - '.github/workflows/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This job's status is ${{ job.status }}."
+      - uses: actions/checkout@v3
+      - run: npm ci
+      - run: npm test
+
+

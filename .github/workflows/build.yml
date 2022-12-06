@@ -6,6 +6,7 @@ on:
       - 'src/**'
       - 'Dockerfile'
       - 'package.json'
+      - 'package-lock.json'
       - 'tsconfig.json'
       - '.github/workflows/**'
 
@@ -36,3 +37,4 @@ jobs:
           git commit -m "build docker"
           git push
 
+          
