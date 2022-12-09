@@ -1,14 +1,10 @@
-import fs from 'fs';
-import https from 'https';
+import http from 'http';
 import QRCode from 'qrcode-terminal';
-import { hostname, realPort, topRedirect } from './envs';
+import { hostURL, topRedirect } from './envs';
 
 export function start() {
-    const server = https.createServer({
-        'cert': fs.readFileSync('/etc/cert/fullchain.pem'),
-        'key': fs.readFileSync('/etc/cert/privkey.pem'),
-    }, (req, res) => {
-        const url = new URL(req.url ?? '/', `http://${hostname}/`);
+    const server = http.createServer((req, res) => {
+        const url = new URL(req.url ?? '/', hostURL);
         const target = url.searchParams.get('url');
         if (!target) {
             res.writeHead(302, {
@@ -26,7 +22,7 @@ export function start() {
     });
 
     server.listen(443, () => {
-        console.log(`Server running at https://${hostname}${realPort === 443 ? '' : ':' + realPort}/`);
+        console.log(`Server running at ${hostURL}`);
     });
 }
 
