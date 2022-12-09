@@ -6,7 +6,6 @@ services:
     ports:
       - "$MICRO_QR_REAL_PORT:443"
     environment:
-      - MICRO_QR_REAL_URL
       - MICRO_QR_TOP_REDIRECT
     volumes:
       - ./log/:/app/log/

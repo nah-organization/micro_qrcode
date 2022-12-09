@@ -1,10 +1,10 @@
 import http from 'http';
 import QRCode from 'qrcode-terminal';
-import { hostURL, topRedirect } from './envs';
+import { topRedirect } from './envs';
 
 export function start() {
     const server = http.createServer((req, res) => {
-        const url = new URL(req.url ?? '/', hostURL);
+        const url = new URL(req.url ?? '/', 'http://localhost/');
         const target = url.searchParams.get('url');
         if (!target) {
             res.writeHead(302, {
@@ -22,7 +22,7 @@ export function start() {
     });
 
     server.listen(443, () => {
-        console.log(`Server running at ${hostURL}`);
+        console.log(`Server running`);
     });
 }
 
