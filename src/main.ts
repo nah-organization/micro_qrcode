@@ -21,7 +21,7 @@ export function start() {
         });
     });
 
-    server.listen(80, () => {
+    server.listen('/socket/server.sock', () => {
         console.log(`Server running`);
     });
 }

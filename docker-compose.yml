@@ -4,9 +4,9 @@ services:
   app:
     build: .
     ports:
-      - "$MICRO_QR_REAL_PORT:80"
     environment:
       - MICRO_QR_TOP_REDIRECT
     volumes:
       - ./log/:/app/log/
+      - $MICRO_QR_SOCKET_DIRECTORY_PATH:/socket/
     restart: always
