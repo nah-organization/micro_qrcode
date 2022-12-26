@@ -36,7 +36,8 @@ describe('server test', () => {
     describe('test main', () => {
         test('top Redirect', () => {
             const resEnd = jest.fn();
-            main({}, { end: resEnd, writeHead: jest.fn() });
+            const resWriteHead = jest.fn();
+            main({}, { end: resEnd, writeHead: resWriteHead });
             expect(resEnd).toHaveBeenCalledTimes(1);
         });
     });
