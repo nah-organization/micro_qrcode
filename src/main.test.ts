@@ -33,4 +33,11 @@ describe('server test', () => {
             expect(mockServer.listen).toHaveBeenCalledWith('/socket/server.sock', expect.any(Function));
         });
     });
+    describe('test main', () => {
+        test('top Redirect', () => {
+            const resEnd = jest.fn();
+            main({}, { end: resEnd, writeHead: jest.fn() });
+            expect(resEnd).toHaveBeenCalledTimes(1);
+        });
+    });
 });
