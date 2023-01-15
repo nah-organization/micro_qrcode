@@ -39,6 +39,8 @@ describe('server test', () => {
             const resWriteHead = jest.fn();
             main({}, { end: resEnd, writeHead: resWriteHead });
             expect(resEnd).toHaveBeenCalledTimes(1);
+            expect(resWriteHead).toHaveBeenCalledTimes(1);
+            expect(resWriteHead).toHaveBeenCalledWith(302, { Location: 'test://test.test/test' });
         });
     });
 });
