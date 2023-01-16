@@ -7,4 +7,5 @@ query string to terminal qrcode string
 
 ## Usage
 `/?url={encodedURL}`
+`/?url=https%3A%2F%2Fexample.com%2F`
 
