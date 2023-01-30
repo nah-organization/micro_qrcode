@@ -6,8 +6,6 @@ jest.mock('http');
 jest.mock('qrcode-terminal');
 jest.mock('./envs', () => {
     return {
-        hostname: 'test-hostname',
-        realPort: 1234,
         topRedirect: 'test://test.test/test'
     };
 });
@@ -34,13 +32,47 @@ describe('server test', () => {
         });
     });
     describe('test main', () => {
-        test('top Redirect', () => {
-            const resEnd = jest.fn();
-            const resWriteHead = jest.fn();
-            main({}, { end: resEnd, writeHead: resWriteHead });
-            expect(resEnd).toHaveBeenCalledTimes(1);
-            expect(resWriteHead).toHaveBeenCalledTimes(1);
-            expect(resWriteHead).toHaveBeenCalledWith(302, { Location: 'test://test.test/test' });
+        describe('top Redirect', () => {
+            test('url is empty', () => {
+                const resEnd = jest.fn();
+                const resWriteHead = jest.fn();
+                main({}, { end: resEnd, writeHead: resWriteHead });
+                expect(resEnd).toHaveBeenCalledTimes(1);
+                expect(resWriteHead).toHaveBeenCalledTimes(1);
+                expect(resWriteHead).toHaveBeenCalledWith(302, { Location: 'test://test.test/test' });
+            });
+            test('url is /', () => {
+                const resEnd = jest.fn();
+                const resWriteHead = jest.fn();
+                main({ url: '/' }, { end: resEnd, writeHead: resWriteHead });
+                expect(resEnd).toHaveBeenCalledTimes(1);
+                expect(resWriteHead).toHaveBeenCalledTimes(1);
+                expect(resWriteHead).toHaveBeenCalledWith(302, { Location: 'test://test.test/test' });
+            });
+            test('url param not have', () => {
+                const resEnd = jest.fn();
+                const resWriteHead = jest.fn();
+                main({ url: '/?abc=def' }, { end: resEnd, writeHead: resWriteHead });
+                expect(resEnd).toHaveBeenCalledTimes(1);
+                expect(resWriteHead).toHaveBeenCalledTimes(1);
+                expect(resWriteHead).toHaveBeenCalledWith(302, { Location: 'test://test.test/test' });
+            });
+            test('url param is empty', () => {
+                const resEnd = jest.fn();
+                const resWriteHead = jest.fn();
+                main({ url: '/?url=' }, { end: resEnd, writeHead: resWriteHead });
+                expect(resEnd).toHaveBeenCalledTimes(1);
+                expect(resWriteHead).toHaveBeenCalledTimes(1);
+                expect(resWriteHead).toHaveBeenCalledWith(302, { Location: 'test://test.test/test' });
+            });
+            test('url is upper case', () => {
+                const resEnd = jest.fn();
+                const resWriteHead = jest.fn();
+                main({ url: '/?URL=abc' }, { end: resEnd, writeHead: resWriteHead });
+                expect(resEnd).toHaveBeenCalledTimes(1);
+                expect(resWriteHead).toHaveBeenCalledTimes(1);
+                expect(resWriteHead).toHaveBeenCalledWith(302, { Location: 'test://test.test/test' });
+            });
         });
     });
 });
